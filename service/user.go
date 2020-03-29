@@ -1,22 +1,40 @@
 package service
 
-func Register(username, email, pwd string) (code int, msg string, uid string) {
-	if true {
-		return -2, "user has already registered, please login", "-1"
+import (
+	"crypto/md5"
+	"encoding/hex"
+
+	"github.com/smoothlee/calendar/mysql"
+)
+
+func Register(username, email, pwd string) (code int, msg string, token string) {
+	if mysql.CheckRepeat(username, email) {
+		return -2, "user has already registered, please login", ""
 	}
-	return 0, "OK", "0"
+	pwdMd5 := md5V(pwd)
+	token = md5V(username)
+	if err := mysql.AddUser(username, email, pwdMd5, username); err != nil {
+		return 0, err.Error(), ""
+	}
+	return 0, "OK", token
 }
 
 func CheckLogin(username, email, pwd string) (code int, msg string, uid string) {
-	if true {
-		return -1, "error no user, please rigister first", "-1"
+	pwdMd5 := md5V(pwd)
+	token := mysql.GetUser(username, email, pwdMd5)
+	if token == "" {
+		return -1, "please check your email, username and password", ""
 	}
-	if true {
-		return -2, "username or password error", "-1"
-	}
-	return 0, "OK", "0"
+	return 0, "OK", token
 }
 
-func CheckUID(uid string) bool {
+func GetUIDByToken(token string) bool {
+	
 	return false
+}
+
+func md5V(str string) string {
+	h := md5.New()
+	h.Write([]byte(str))
+	return hex.EncodeToString(h.Sum(nil))
 }
