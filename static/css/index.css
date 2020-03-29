@@ -1,0 +1,212 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+.container {
+  width: 1200px;
+  margin: 0 auto;
+  /* display: flex; */
+}
+.header {
+  height: 40px;
+  background-color: #ccc;
+  margin-bottom: 20px;
+  line-height: 40px;
+  font-size: 14px;
+  color: #444;
+}
+.header .login {
+  float: right;
+  margin-right: 10px;
+  cursor: pointer;
+  color: #1890ff;
+}
+.header .login_ok {
+  display: none;
+  float: right;
+  margin-right: 10px;
+}
+.header .login_ok .logout {
+  cursor: pointer;
+  margin-left: 10px;
+  color: #1890ff;
+}
+.table_con {
+  width: 718px;
+  float: left;
+}
+.table_header {
+  display: flex;
+  width: 716px;
+  background: #ccc;
+}
+
+.table_header .table_title {
+  flex: 1;
+  text-align: center;
+  line-height: 40px;
+}
+.table_header .pre,
+.table_header .next {
+  width: 100px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 30px;
+  cursor: pointer;
+}
+.table th,
+.table td {
+  width: 100px;
+  height: 50px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+}
+.table td.event::after {
+  content: " ";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  background: #f00;
+}
+.table td.active {
+  background: #e6f7ff;
+}
+.table td.current {
+  border-top: 2px solid #1890ff;
+}
+.table td.not {
+  color: rgba(0, 0, 0, 0.25);
+  cursor: no-drop;
+}
+.event_list {
+  float: right;
+  border: 1px solid #ccc;
+  width: 450px;
+  height: 350px;
+  overflow: auto;
+}
+.list_header {
+  position: relative;
+  text-align: center;
+  height: 40px;
+  background: #ccc;
+}
+.list_header .list_title {
+  line-height: 40px;
+}
+.list_header .add_btn {
+  cursor: pointer;
+  padding: 5px;
+  color: #fff;
+  background: #1890ff;
+  display: inline-block;
+  border-radius: 5px;
+  position: absolute;
+  right: 5px;
+  top: 3px;
+}
+.event_item {
+  position: relative;
+  border-bottom: 1px solid #ccc;
+  padding: 5px 0;
+}
+.event_item .item_title {
+  margin: 0;
+  padding: 0;
+  width: 350px;
+  color: #555;
+}
+.event_item .item_time {
+  font-size: 12px;
+  color: #999;
+}
+.event_item .delete_btn {
+  position: absolute;
+  right: 30px;
+  top: 10px;
+  font-size: 12px;
+  color: #fff;
+  background: #f00;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+  line-height: 15px;
+  cursor: pointer;
+}
+.mask {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+.modal {
+  width: 330px;
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  padding: 0 20px 10px 20px;
+  border-radius: 5px;
+}
+.modal .modal_header {
+  height: 40px;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+  line-height: 40px;
+}
+.modal .modal_header h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+.modal .modal_body {
+  padding: 20px 10px;
+}
+.modal .modal_body .modal_item {
+  margin-bottom: 10px;
+}
+.modal .modal_body .modal_item .label {
+  display: inline-block;
+  width: 90px;
+}
+.modal .modal_body .register_btn {
+  cursor: pointer;
+  text-align: right;
+  color: #1890ff;
+  font-size: 12px;
+}
+.modal .modal_body .modal_item select {
+  width: 160px;
+  height: 23px;
+}
+.modal .modal_footer {
+  padding-top: 10px;
+  height: 40px;
+  border-top: 1px solid #ccc;
+  text-align: center;
+  /* line-height: 40px; */
+}
+.btn {
+  cursor: pointer;
+  padding: 5px;
+  color: #fff;
+  display: inline-block;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.modal .modal_submit_btn {
+  background: #1890ff;
+}
+.modal .modal_close_btn {
+  /* background: #1890ff; */
+  color: #666;
+}

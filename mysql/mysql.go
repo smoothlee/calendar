@@ -44,7 +44,7 @@ func Init() error {
 	if err != nil {
 		return err
 	}
-	selectByMonth, err = db.Prepare("SELECT DISTINCT `month` FROM events WHERE year=? AND month=? AND uid=?")
+	selectByMonth, err = db.Prepare("SELECT DISTINCT `day` FROM events WHERE year=? AND month=? AND uid=?")
 	if err != nil {
 		return err
 	}
