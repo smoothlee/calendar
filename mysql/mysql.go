@@ -18,7 +18,7 @@ var (
 )
 
 func Init() error {
-	db, err := sql.Open("mysql", "root:123456@tcp(127.0.0.1:3306)/calendar?charset=utf8&parseTime=True&loc=Local")
+	db, err := sql.Open("mysql", "root:123456@tcp(127.0.0.1:3306)/calender?charset=utf8&parseTime=True&loc=Local")
 	if err != nil {
 		return err
 	}
@@ -52,7 +52,7 @@ func Init() error {
 	if err != nil {
 		return err
 	}
-	delEvent, err = db.Prepare("DELETE FROM events WEHRE `id`=?")
+	delEvent, err = db.Prepare("DELETE FROM events WHERE `id`=?")
 	if err != nil {
 		return err
 	}
