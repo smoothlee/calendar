@@ -36,8 +36,8 @@ func GetDay(uid int64, year, month, day int) ([]*EventModel, error) {
 	return ret, nil
 }
 
-func DelEvent(id string) error {
-	_, err := delEvent.Exec(id)
+func DelEvent(uid int64, eid string) error {
+	_, err := delEvent.Exec(eid, uid)
 	return err
 }
 

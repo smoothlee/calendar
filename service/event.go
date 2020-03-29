@@ -13,8 +13,8 @@ func AddEvent(uid int64, year, month, day int, time, title string) error {
 	return mysql.AddEvent(uid, event)
 }
 
-func DelEvent(eventID string) error {
-	return mysql.DelEvent(eventID)
+func DelEvent(uid int64, eventID string) error {
+	return mysql.DelEvent(uid, eventID)
 }
 
 func GetDay(uid int64, year, month, day int) ([]*mysql.EventModel, error) {

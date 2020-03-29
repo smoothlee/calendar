@@ -52,7 +52,7 @@ func Init() error {
 	if err != nil {
 		return err
 	}
-	delEvent, err = db.Prepare("DELETE FROM events WHERE `id`=?")
+	delEvent, err = db.Prepare("DELETE FROM events WHERE `id`=? AND uid=?")
 	if err != nil {
 		return err
 	}

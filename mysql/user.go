@@ -1,12 +1,13 @@
 package mysql
 
+import "fmt"
+
 func CheckRepeat(username, email string) bool {
 	row := checkRepeatUser.QueryRow(email, username)
 	var id int64
-	if err := row.Scan(&id); err != nil {
-		return true
-	}
-	if id == 0 {
+	row.Scan(&id)
+	if id != 0 {
+		fmt.Println(id)
 		return true
 	}
 	return false
@@ -18,7 +19,7 @@ func AddUser(username, email, password, token string) error {
 }
 
 func GetUser(username, email, password string) string {
-	row := checkUser.QueryRow(username, email, password)
+	row := checkUser.QueryRow(username, password, email)
 	var token string
 	row.Scan(&token)
 	return token

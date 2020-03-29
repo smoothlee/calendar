@@ -13,7 +13,7 @@ func Register(username, email, pwd string) (code int, msg string, token string) 
 	}
 	pwdMd5 := md5V(pwd)
 	token = md5V(username)
-	if err := mysql.AddUser(username, email, pwdMd5, username); err != nil {
+	if err := mysql.AddUser(username, email, pwdMd5, token); err != nil {
 		return 0, err.Error(), ""
 	}
 	return 0, "OK", token

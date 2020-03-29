@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -49,7 +50,7 @@ func del(c *gin.Context) {
 		return
 	}
 	eventID := c.PostForm("event_id")
-	if err := service.DelEvent(eventID); err != nil {
+	if err := service.DelEvent(uid, eventID); err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -2,
 			"msg":  err.Error(),
@@ -95,5 +96,33 @@ func getDay(c *gin.Context) {
 }
 
 func getMonth(c *gin.Context) {
-
+	token := c.PostForm("token")
+	fmt.Println(token)
+	uid := service.GetUIDByToken(token)
+	fmt.Println(uid)
+	if uid == 0 {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "token error",
+			"data": nil,
+		})
+		return
+	}
+	year, _ := strconv.Atoi(c.PostForm("year"))
+	month, _ := strconv.Atoi(c.PostForm("month"))
+	list, err := service.GetMonth(uid, year, month)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  err.Error(),
+			"data": nil,
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": 0,
+		"msg":  "OK",
+		"data": list,
+	})
+	return
 }
