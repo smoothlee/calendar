@@ -2,26 +2,31 @@ package controller
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/smoothlee/calendar/service"
 )
 
 func add(c *gin.Context) {
-	uid := c.PostForm("uid")
-	if !service.CheckUID(uid) {
+	token := c.PostForm("token")
+	uid := service.GetUIDByToken(token)
+	if uid == 0 {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
-			"msg":  "wrong uid please login",
+			"msg":  "token error",
 		})
 		return
 	}
-	event := c.PostForm("event")
-	date := c.PostForm("date")
-	if err := service.AddEvent(uid, date, event); err != nil {
+	year, _ := strconv.Atoi(c.PostForm("year"))
+	month, _ := strconv.Atoi(c.PostForm("month"))
+	day, _ := strconv.Atoi(c.PostForm("day"))
+	time := c.PostForm("time")
+	title := c.PostForm("title")
+	if err := service.AddEvent(uid, year, month, day, time, title); err != nil {
 		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "server error",
+			"code": -2,
+			"msg":  err.Error(),
 		})
 		return
 	}
@@ -34,18 +39,20 @@ func add(c *gin.Context) {
 }
 
 func del(c *gin.Context) {
-	uid := c.PostForm("uid")
-	eventID := c.PostForm("event_id")
-	if uid == "" {
+	token := c.PostForm("token")
+	uid := service.GetUIDByToken(token)
+	if uid == 0 {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
-			"msg":  "please login",
+			"msg":  "token error",
 		})
+		return
 	}
-	if err := service.DelEvent(uid, eventID); err != nil {
+	eventID := c.PostForm("event_id")
+	if err := service.DelEvent(eventID); err != nil {
 		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "server error",
+			"code": -2,
+			"msg":  err.Error(),
 		})
 		return
 	}
@@ -57,20 +64,24 @@ func del(c *gin.Context) {
 }
 
 func getDay(c *gin.Context) {
-	uid := c.PostForm("uid")
-	date := c.PostForm("date")
-	if uid == "" {
+	token := c.PostForm("token")
+	uid := service.GetUIDByToken(token)
+	if uid == 0 {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
-			"msg":  "please login",
+			"msg":  "token error",
 			"data": nil,
 		})
+		return
 	}
-	eventList, err := service.GetEvents(uid, date)
+	year, _ := strconv.Atoi(c.PostForm("year"))
+	month, _ := strconv.Atoi(c.PostForm("month"))
+	day, _ := strconv.Atoi(c.PostForm("day"))
+	list, err := service.GetDay(uid, year, month, day)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
-			"msg":  "server error",
+			"msg":  err.Error(),
 			"data": nil,
 		})
 		return
@@ -78,7 +89,7 @@ func getDay(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"code": 0,
 		"msg":  "OK",
-		"data": eventList,
+		"data": list,
 	})
 	return
 }

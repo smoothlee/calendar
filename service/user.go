@@ -19,7 +19,7 @@ func Register(username, email, pwd string) (code int, msg string, token string) 
 	return 0, "OK", token
 }
 
-func CheckLogin(username, email, pwd string) (code int, msg string, uid string) {
+func Login(username, email, pwd string) (code int, msg string, uid string) {
 	pwdMd5 := md5V(pwd)
 	token := mysql.GetUser(username, email, pwdMd5)
 	if token == "" {
@@ -28,9 +28,9 @@ func CheckLogin(username, email, pwd string) (code int, msg string, uid string) 
 	return 0, "OK", token
 }
 
-func GetUIDByToken(token string) bool {
-	
-	return false
+func GetUIDByToken(token string) int64 {
+	id := mysql.GetUID(token)
+	return id
 }
 
 func md5V(str string) string {

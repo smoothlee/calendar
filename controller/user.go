@@ -11,7 +11,7 @@ func login(c *gin.Context) {
 	username := c.PostForm("username")
 	email := c.PostForm("email")
 	password := c.PostForm("password")
-	code, msg, token := service.CheckLogin(username, email, password)
+	code, msg, token := service.Login(username, email, password)
 	c.JSON(http.StatusOK, gin.H{
 		"code":  code,
 		"msg":   msg,

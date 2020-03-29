@@ -40,7 +40,7 @@ func Init() error {
 		return err
 	}
 	//event
-	selectByDay, err = db.Prepare("SELECT `id`, `title` FROM events WHERE year=? AND month=? AND day=? AND uid=?")
+	selectByDay, err = db.Prepare("SELECT `id`, `title`, `time` FROM events WHERE year=? AND month=? AND day=? AND uid=?")
 	if err != nil {
 		return err
 	}

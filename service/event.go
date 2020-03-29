@@ -1,13 +1,26 @@
 package service
 
-func AddEvent(uid, date, event string) error {
-	return nil
+import "github.com/smoothlee/calendar/mysql"
+
+func AddEvent(uid int64, year, month, day int, time, title string) error {
+	event := &mysql.EventModel{
+		Year:  year,
+		Month: month,
+		Day:   day,
+		Title: title,
+		Time:  time,
+	}
+	return mysql.AddEvent(uid, event)
 }
 
-func DelEvent(uid string, eventID string) error {
-	return nil
+func DelEvent(eventID string) error {
+	return mysql.DelEvent(eventID)
 }
 
-func GetEvents(uid, date string) ([]map[string]string, error) {
-	return nil, nil
+func GetDay(uid int64, year, month, day int) ([]*mysql.EventModel, error) {
+	return mysql.GetDay(uid, year, month, day)
+}
+
+func GetMonth(uid int64, year, month int) ([]int, error) {
+	return mysql.GetMonth(uid, year, month)
 }
